@@ -6,7 +6,7 @@ public class HomeworkOne {
 		double radius = 10.0;
 		double area = (Math.pow(radius, 2)) * Math.PI;
 		
-		System.out.println("The area of the circle is " + area);
+		System.out.println("The area of the circle with radius " + radius + " is " + area + ".");
 		
 	}
 
