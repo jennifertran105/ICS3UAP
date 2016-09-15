@@ -7,7 +7,7 @@ public class HomeworkOne {
 		
 		x = 10;
 		
-		System.out.println("The number I chose is " +  Math.sqrt(x) + " .");
+		System.out.println("The number I chose is " + x + " and it's square root is " + Math.sqrt(x) + " .");
 
 	}
 

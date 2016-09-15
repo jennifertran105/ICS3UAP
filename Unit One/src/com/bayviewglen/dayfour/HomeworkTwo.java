@@ -3,7 +3,11 @@ package com.bayviewglen.dayfour;
 public class HomeworkTwo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		int x = 7
+		int p = 70
+		
+		System.out
+		
 
 	}
 
