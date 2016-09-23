@@ -47,17 +47,16 @@ public class BayviewGlenPools {
 		System.out.println("The volume of the pool is " + totalVolume + " litres.");
 		double for90Percent = 0.9;
 		double findPercent = totalVolume * for90Percent;
-		double inLitres = (int)(findPercent * 100000)/100.0;
-		System.out.println("The volume of 90% of the pool is " + inLitres + " litres.");
+		System.out.println("The volume of 90% of the pool is " + findPercent + " litres.");
 		System.out.println("");
 		
 		//Surface Area
-		double deepLength = length - (lengthShallow + middleLength);
-		double deepSurface = 2 * (width * deepLength + depthDeep * deepLength + depthDeep * width);
-		double middleSurfaceArea = (2 * (width * lengthShallow + depthShallow * lengthShallow + depthShallow  * width) + ((2 * (width * middleLength + heightDifference * middleLength + heightDifference * width) / 2)));
-		double shallowSurfaceArea = 2 * (width * lengthShallow + depthShallow * lengthShallow + depthShallow * width);
-		double totalSurfaceArea = deepSurface + middleSurfaceArea + shallowSurfaceArea;
-		System.out.println("The total surface area of the pool is " + totalSurfaceArea + "m^2.")
+		//double deepLength = length - (lengthShallow + middleLength);
+		double areaA = 2*(length * depthDeep) - ((heightDifference * lengthShallow) + ((middleLength *heightDifference)/2));
+		double areaB = 2 * (width * depthDeep);
+		double areaC = length * width;
+		double totalSurfaceArea = areaA + areaB + areaC;
+		System.out.println("The total surface area of the pool is " + totalSurfaceArea + "m^2.");
 		
 		// Prices
 		double linerOnePrice = LINER_ONE * totalSurfaceArea;
