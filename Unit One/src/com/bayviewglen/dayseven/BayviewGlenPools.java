@@ -29,11 +29,11 @@ public class BayviewGlenPools {
 		System.out.print("Please input the length of the shallow end:");
 		double lengthShallow = keyboard.nextDouble();
 		
-		System.out.println("The price of liner 1 per square meter:  $" + LINER_ONE);
+		System.out.println("The price of liner 1 per square meter: $" + LINER_ONE);
 		
-		System.out.println("The price of liner 2 per square meter:  $" + LINER_TWO);
+		System.out.println("The price of liner 2 per square meter: $" + LINER_TWO);
 		
-		System.out.println("The price of liner 3 per square meter:  $" + LINER_THREE);
+		System.out.println("The price of liner 3 per square meter: $" + LINER_THREE);
 
 		System.out.println("");
 		
@@ -43,10 +43,10 @@ public class BayviewGlenPools {
 		double middleLength = Math.sqrt(Math.pow(transition, 2) - Math.pow(heightDifference, 2));
 		double smallRectangle = heightDifference * lengthShallow * width;
 		double smallTriangle = middleLength * heightDifference * width/2;
-		double findTotalVolume = (width * length * depthDeep) - ((smallRectangle) + (smallTriangle));
-		System.out.println("The volume of the pool is " + findTotalVolume + " litres.");
+		double totalVolume = (width * length * depthDeep) - ((smallRectangle) + (smallTriangle));
+		System.out.println("The volume of the pool is " + totalVolume + " litres.");
 		double for90Percent = 0.9;
-		double findPercent = findTotalVolume * for90Percent;
+		double findPercent = totalVolume * for90Percent;
 		double inLitres = (int)(findPercent * 100000)/100.0;
 		System.out.println("The volume of 90% of the pool is " + inLitres + " litres.");
 		System.out.println("");
@@ -57,7 +57,7 @@ public class BayviewGlenPools {
 		double middleSurfaceArea = (2 * (width * lengthShallow + depthShallow * lengthShallow + depthShallow  * width) + ((2 * (width * middleLength + heightDifference * middleLength + heightDifference * width) / 2)));
 		double shallowSurfaceArea = 2 * (width * lengthShallow + depthShallow * lengthShallow + depthShallow * width);
 		double totalSurfaceArea = deepSurface + middleSurfaceArea + shallowSurfaceArea;
-		System.out.println("The total surface area of the pool is " + totalSurfaceArea + "m^2.");
+		System.out.println("The total surface area of the pool is " + totalSurfaceArea + "m^2.")
 		
 		// Prices
 		double linerOnePrice = LINER_ONE * totalSurfaceArea;
