@@ -5,7 +5,7 @@ package com.bayviewglen.dayfive;
 
 import java.text.DecimalFormat;
 
-public class ExmapleOne {
+public class ExampleOne {
 
 	public static void main(String[] args) {
 		
