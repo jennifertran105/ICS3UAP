@@ -9,7 +9,10 @@ public class Hangman {
 
 		final String VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
 		final String VALID_CHARACTERS_NOSPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		final int SPACES = 30;
+		final int SPACES = 35;
+		final int MAX_POINTS_PER_ROUND = 8;
+		final int MAX_ROUNDS = 5;
+		final int MAX_GUESSES = 7;
 		int rounds = 1;
 		int p1Score = 0;
 		int p2Score = 0;
@@ -57,11 +60,12 @@ public class Hangman {
 				System.out.println();
 
 				validPhrase = true;
+				// Checks if nothing is entered
 				if (guessPhrase.length() == 0) {
 					System.out.print(phraseMaker + ", ERROR- Please enter an ALPHANUMERIC phrase:");
 					validPhrase = false;
 				}
-				// Checks of phrase is alphanumeric
+				// Checks if phrase is alphanumeric
 				for (int k = 0; k < guessPhrase.length() && validPhrase; k++) {
 					if (VALID_CHARACTERS.indexOf(guessPhrase.charAt(k)) == -1) {
 						System.out.print(phraseMaker + ", ERROR- Please enter an ALPHANUMERIC phrase:");
@@ -70,9 +74,10 @@ public class Hangman {
 
 					}
 
-				} // end for loop checks if phrase alphanumerical
+				}
 
-			} // end while Valid phrase
+			}
+			// Turns inputed phrase into _ or /
 			for (int i = 0; i < SPACES; i++)
 				System.out.println();
 			for (int j = 0; j < guessPhrase.length(); j++) {
@@ -81,8 +86,7 @@ public class Hangman {
 				} else {
 					codedPhrase += ("_ ");
 				}
-			} // end for loop coding phrase
-
+			}
 			System.out.println();
 			boolean round = true;
 			while (numGuessed < 7 && round) {
@@ -95,12 +99,13 @@ public class Hangman {
 				while (!validChoice) {
 					choice = keyboard.nextLine().toUpperCase().trim();
 
-					// Choice 1 (Character)
+					// Choice 1 (enter character)
 					if (choice.equals("1")) {
 						System.out.println("Your available letters & numbers are: " + possibleCharacters);
 						System.out.println("");
 						System.out.print("Please enter your choice: ");
 						boolean validCharacter = false;
+						// Checks character entered
 						while (!validCharacter) {
 							choice = keyboard.nextLine().toUpperCase().trim();
 							if (VALID_CHARACTERS.indexOf(choice.charAt(0)) == -1) {
@@ -111,30 +116,31 @@ public class Hangman {
 								System.out.print("ERROR - you have already guessed that character: ");
 							} else {
 								validCharacter = true;
+							}
+						}
+						// Replaces in possible characters
+						if (VALID_CHARACTERS_NOSPACE.indexOf(choice) != -1
+								&& possibleCharacters.indexOf(choice) != -1) {
+							possibleCharacters = possibleCharacters.substring(0, possibleCharacters.indexOf(choice))
+									+ "_" + possibleCharacters.substring(possibleCharacters.indexOf(choice) + 1);
+						}
+						// Replaces in phrase
+						for (int g = 0; g < guessPhrase.length(); g++) {
+							if (guessPhrase.charAt(g) == choice.charAt(0)) {
+								codedPhrase = codedPhrase.substring(0, g * 2) + choice
+										+ codedPhrase.substring(g * 2 + 1);
 
 							}
-							// Replaces in possible characters
-							if (VALID_CHARACTERS_NOSPACE.indexOf(choice) != -1
-									&& possibleCharacters.indexOf(choice) != -1) {
-								possibleCharacters = possibleCharacters.substring(0, possibleCharacters.indexOf(choice))
-										+ "_" + possibleCharacters.substring(possibleCharacters.indexOf(choice) + 1);
-							}
-							// Replaces in phrase
-							for (int g = 0; g < guessPhrase.length(); g++) {
-								if (guessPhrase.charAt(g) == choice.charAt(0)) {
-									codedPhrase = codedPhrase.substring(0, g * 2) + choice
-											+ codedPhrase.substring(g * 2 + 1);
-
-								}
-							}
-							if (codedPhrase.indexOf("_") == -1) {
-								System.out.println(guesser + ", you have won the round!");
-								numGuessed--;
-								round = false;
-							}
-							validChoice = true;
-							numGuessed++;
-						} // while (!validCharacter) ends
+						}
+						// If all characters of the codedPhrase is guessed & is
+						// correct
+						if (codedPhrase.indexOf("_") == -1) {
+							System.out.println(guesser + ", you have won the round!");
+							numGuessed--;
+							round = false;
+						}
+						validChoice = true;
+						numGuessed++;
 
 						System.out.println(possibleCharacters);
 						System.out.println(codedPhrase);
@@ -146,33 +152,38 @@ public class Hangman {
 							solutionPhrase = keyboard.nextLine().toUpperCase().trim();
 							numGuessed++;
 							validPhrase = false;
+							// Checks if phrase is alphanumeric
 							for (int i = 0; i < solutionPhrase.length() && validPhrase; i++) {
 								if (VALID_CHARACTERS.indexOf(solutionPhrase.charAt(i)) == -1) {
 									System.out.print(guesser + ", please enter an ALPHANUMERIC answer: ");
 									validPhrase = true;
 								}
 							}
-						} // while (!validPhrase) ends
+						}
+						// Checks if phrase guessed is correct
 						if (solutionPhrase.equals(guessPhrase)) {
 							System.out.println(guesser + ", you have won the round!");
 							numGuessed--;
 							round = false;
+							rounds++;
 						} else {
 							System.out.println(guesser + " you are incorrect.");
 							round = true;
 						}
 						validChoice = true;
 						numGuessed++;
+					} else {
+						System.out.println("ERROR- would you like to (1) guess a character or (2) solve: ");
 					}
 
-				} // end while (!validchoice)
-			} // end while (num guessed
-			if (numGuessed == 7) {
+				}
+			}
+			// If they used 7 guesses
+			if (numGuessed == MAX_GUESSES) {
 				System.out.print(guesser + ", you have used all your guesses... Please enter your solution: ");
 				validPhrase = true;
 				while (validPhrase) {
 					solutionPhrase = keyboard.nextLine().toUpperCase();
-
 					validPhrase = false;
 					for (int i = 0; i < solutionPhrase.length(); i++) {
 						if (VALID_CHARACTERS.indexOf(guessPhrase.charAt(i)) == -1) {
@@ -182,6 +193,7 @@ public class Hangman {
 						}
 					}
 				}
+				// Checks if phrase guessed is correct
 				if (solutionPhrase.equals(guessPhrase)) {
 					System.out.println("You are correct!");
 					round = false;
@@ -191,25 +203,26 @@ public class Hangman {
 					numGuessed++;
 
 				}
+				rounds++;
 			}
 			// Takes number of guesses and adds to score
 			if (turns % 2 == 1) {
-				p1Score += 8 - numGuessed;
+				p1Score += MAX_POINTS_PER_ROUND - numGuessed;
 			} else if (turns % 2 == 0) {
-				p2Score += 8 - numGuessed;
-				rounds++;
+				p2Score += MAX_POINTS_PER_ROUND - numGuessed;
 
 			}
-			System.out.println("Total players points:");
+			// Prints total players points after each round
+			System.out.println("Players points:");
 			System.out.println(p1n + ": " + p1Score);
 			System.out.println(p2n + ": " + p2Score);
 			// Displays Winner & if tie plays another round
-			if (turns % 2 == 0 && rounds > 5) {
+			if (turns % 2 == 0 && rounds > MAX_ROUNDS) {
 				if (p1Score > p2Score) {
-					System.out.println(p1n + ", WINS :)" + p2n + ", loses :(");
+					System.out.println(p1n + ", WINS :) " + p2n + ", loses :(");
 					gameOver = true;
 				} else if (p1Score < p2Score) {
-					System.out.println(p2n + ", WINS :)" + p1n + ", loses :(");
+					System.out.println(p2n + ", WINS :) " + p1n + ", loses :(");
 					gameOver = true;
 				} else {
 					System.out.println("This game is a tie! Please play a tie-breaker to determine the winner...");
@@ -217,12 +230,7 @@ public class Hangman {
 				}
 			}
 			turns++;
-		} // end while (!game over)
-		long time = System.currentTimeMillis();
-		System.out.println("The program will close in 5 seconds...");
-		while ((double) (System.currentTimeMillis() - time) < 10000.0) {
 		}
-		System.out.println("Goodbye.");
 		keyboard.close();
 	}
 }
