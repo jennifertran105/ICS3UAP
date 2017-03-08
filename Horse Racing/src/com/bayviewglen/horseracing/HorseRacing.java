@@ -18,7 +18,7 @@ public class HorseRacing {
 		String[] playerNames = new String[100];
 		int[] playerWallets = new int[100];
 
-		//TODO make sure tit adds and doesnt rewrite array
+		//TODO make sure it adds and doesnt rewrite array
 		horses = getHorses();
 		playerData = getPlayerData();
 		playerNames = getPlayersNames(playerData);
